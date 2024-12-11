@@ -49,7 +49,7 @@ private:
   int EventID;
   int RFID;
   int TurnID;
-  int Intensity[33];
+  int Intensity[32];
   int fpga_triggers[5] = {0};
   int nim_triggers[5] = {0};
 

@@ -23,7 +23,7 @@ int ConvertToVect(const char* fn_udst="/seaquest/users/mhossain/HitMatrix/e1039-
 	tree->SetTreeName("tree");
 	tree->SetFileName("test.root");
 	se->registerOutputManager(tree);
-	se->run();
+	se->run(0);
 	se->End();
 	return 0;
 }

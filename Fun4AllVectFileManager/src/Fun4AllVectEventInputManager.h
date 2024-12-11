@@ -64,7 +64,7 @@ protected:
     
     std::vector<int>* DetectorID = nullptr;
     std::vector<int>* ElementID = nullptr;
-    std::vector<int>* DriftDistance = nullptr;
+    std::vector<double>* DriftDistance = nullptr;
     std::vector<double>* TdcTime = nullptr;
     std::vector<bool>* hit_in_time=nullptr;
 
@@ -76,6 +76,7 @@ protected:
 
     int fpga_triggers[5] = {0};
     int nim_triggers[5] = {0};
+    int Intensity[33] = {0};
 
    bool _enable_e1039_translation;
    SQRun*       run_header;

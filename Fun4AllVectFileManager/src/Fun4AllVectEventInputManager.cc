@@ -121,10 +121,12 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 		spill_map->insert(spill);
 		run_header->set_n_spill(spill_map->size());
 	}
-	event_header->set_spill_id(EventID);
-	event_header->set_event_id(SpillID);
+	event_header->set_spill_id(SpillID);
+	event_header->set_event_id(EventID);
 	event_header->set_data_quality(0);
-	//for(int i = -16; i < 16; ++i) event_header->set_qie_rf_intensity(i, _srawEvent->getIntensity(i)); // need to be added
+	for(int i = -16; i < 16; ++i) {event_header->set_qie_rf_intensity(i, Intensity[i+16]);} // need to be added
+	//for(int i = -16; i < 16; ++i) {cout << "intensity: "<< Intensity[i+16] <<endl;} // need to be added
+	
 
 
 	if (event_header) {
@@ -151,6 +153,7 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 		hit->set_drift_distance(DriftDistance->at(i));
 		hit->set_in_time(hit_in_time->at(i));
 		//cout << " hit in time: "<< hit_in_time->at(i) <<endl;
+		cout << "drift dis: " << DriftDistance->at(i) <<endl;
 		hit_vec->push_back(hit);
 	}
 
@@ -208,6 +211,7 @@ int Fun4AllVectEventInputManager::fileopen(const std::string &filenam) {
     _tin->SetBranchAddress("SpillID", &SpillID);           
     _tin->SetBranchAddress("fpga_triggers", fpga_triggers);
     _tin->SetBranchAddress("nim_triggers", nim_triggers);
+    _tin->SetBranchAddress("Intensity", Intensity);
 
     _tin->SetBranchAddress("DetectorID", &DetectorID);     
     _tin->SetBranchAddress("ElementID", &ElementID);       
@@ -268,7 +272,6 @@ int Fun4AllVectEventInputManager::run(const int nevents) {
    syncobject->EventNumber     (EventID);
 
 
-    VectToE1039();
        if (_enable_e1039_translation) {
       VectToE1039();
    }

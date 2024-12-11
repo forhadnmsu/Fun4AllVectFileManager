@@ -3,8 +3,8 @@ R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libfun4all_vect_file_manager)
 
 int Fun4Sim_reco_data2024(const int n_evt = 10){
-  recoConsts* rc = recoConsts::instance();
-  //rc->set_IntFlag("RUNNUMBER", run_id);
+/*
+  rc->set_IntFlag("RUNNUMBER", 5443);
   rc->set_DoubleFlag("FMAGSTR", -1.044);
   rc->set_DoubleFlag("KMAGSTR", -1.025);
   rc->set_BoolFlag("COARSE_MODE", false);
@@ -25,10 +25,21 @@ int Fun4Sim_reco_data2024(const int n_evt = 10){
   rc->set_DoubleFlag("RejectWinDC2" , 0.35);
   rc->set_DoubleFlag("RejectWinDC3p", 0.24);
   rc->set_DoubleFlag("RejectWinDC3m", 0.24);
+*/
+    const double FMAGSTR = -1.044;
+  const double KMAGSTR = -1.025;
+  recoConsts *rc = recoConsts::instance();
+  rc->set_IntFlag("RUNNUMBER", 5433); /// The geometry is selected based on run number.
+  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
+  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->set_DoubleFlag("SIGX_BEAM", 0.3);
+  rc->set_DoubleFlag("SIGY_BEAM", 0.3);
+  rc->set_DoubleFlag("Z_UPSTREAM", -700.);
   
+
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->setRun(run_id);
-  //se->Verbosity(1);
+  se->Verbosity(100);
 /*
   CalibHitElementPos* cal_ele_pos = new CalibHitElementPos();
   cal_ele_pos->CalibTriggerHit(false);
@@ -45,7 +56,7 @@ int Fun4Sim_reco_data2024(const int n_evt = 10){
   se->registerSubsystem(cal_dd);
 */
   SQReco* reco = new SQReco();
-  //reco->Verbosity(99);
+  //reco->Verbosity(100);
   reco->set_legacy_rec_container(false); // default = true
   reco->set_geom_file_name((string)gSystem->Getenv("E1039_RESOURCE") + "/geometry/geom_run005433.root");
   reco->set_enable_KF(true);
@@ -63,7 +74,7 @@ int Fun4Sim_reco_data2024(const int n_evt = 10){
   //se->registerSubsystem(vtx_fit);
 
   SQVertexing* vtx = new SQVertexing();
-  vtx->Verbosity(99);
+  vtx->Verbosity(100);
   //vtx->set_legacy_rec_container(true); // default = false
   //vtx->set_single_retracking(true);
   se->registerSubsystem(vtx);

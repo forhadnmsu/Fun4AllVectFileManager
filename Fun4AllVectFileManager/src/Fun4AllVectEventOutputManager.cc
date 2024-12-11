@@ -86,6 +86,7 @@ int Fun4AllVectEventOutputManager::Write(PHCompositeNode* startNode) {
 	if (!m_file || !m_tree) {
 		OpenFile(startNode);
 	}
+ResetBranches();
 	RunID = m_evt->get_run_id();
 	SpillID = m_evt->get_spill_id();
 	RFID = m_evt->get_qie_rf_id();
@@ -106,7 +107,9 @@ int Fun4AllVectEventOutputManager::Write(PHCompositeNode* startNode) {
 	nim_triggers[4] = m_evt->get_trigger(SQEvent::NIM5);
 
 
-	for (int i = -16; i <= 16; ++i) {
+	for (int i = -16; i < 16; ++i) {
+
+		cout << "intensity intex: i" << i+16 << endl;
 		Intensity[i+16] = m_evt->get_qie_rf_intensity(i);
 	}
 
@@ -117,6 +120,7 @@ int Fun4AllVectEventOutputManager::Write(PHCompositeNode* startNode) {
 			ElementID.push_back(hit->get_element_id());
 			TdcTime.push_back(hit->get_tdc_time());
 			DriftDistance.push_back(hit->get_drift_distance());
+			cout << "get drift distance: "<< hit->get_drift_distance()<<endl;
 			hit_in_time.push_back(hit->is_in_time());
 		}
 	}
@@ -133,7 +137,6 @@ int Fun4AllVectEventOutputManager::Write(PHCompositeNode* startNode) {
 	}   
 
 	m_tree->Fill();
-	ResetBranches();
 	return 0;
 }
 
