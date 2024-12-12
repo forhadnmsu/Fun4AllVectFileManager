@@ -78,7 +78,6 @@ protected:
     int nim_triggers[5] = {0};
     int Intensity[33] = {0};
 
-   bool _enable_e1039_translation;
    SQRun*       run_header;
    SQSpillMap*  spill_map;
    SQEvent*     event_header;

@@ -1,6 +1,6 @@
 *.root
 *.log
 *.tmp
-*.bak
+*.swp
 Fun4AllVectFileManager/build/
 Fun4AllVectFileManager/inst/

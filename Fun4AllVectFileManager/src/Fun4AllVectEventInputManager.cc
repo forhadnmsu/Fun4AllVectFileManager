@@ -37,7 +37,6 @@ Fun4AllVectEventInputManager::Fun4AllVectEventInputManager(const std::string& na
    events_thisfile(0),
    topNodeName(topnodename),
    _tree_name("save"),
-   _enable_e1039_translation(false),
    run_header(nullptr),
    spill_map(nullptr),
    event_header(nullptr),
@@ -76,10 +75,6 @@ Fun4AllVectEventInputManager::~Fun4AllVectEventInputManager()
 
 void Fun4AllVectEventInputManager::enable_E1039_translation()
  {
-   if(!_enable_e1039_translation)
-   {
-     _enable_e1039_translation = true;
-  
      Fun4AllServer* se = Fun4AllServer::instance();
      topNode = se->topNode(topNodeName.c_str());
   
@@ -106,7 +101,6 @@ void Fun4AllVectEventInputManager::enable_E1039_translation()
      trig_hit_vec = new SQHitVector_v1();
      PHIODataNode<PHObject>* triggerhitNode = new PHIODataNode<PHObject>(trig_hit_vec, "SQTriggerHitVector", "PHObject");
      eventNode->addNode(triggerhitNode);
-   }
  }
 
 void Fun4AllVectEventInputManager::VectToE1039() {
@@ -270,11 +264,7 @@ int Fun4AllVectEventInputManager::run(const int nevents) {
    syncobject->EventCounter    (events_thisfile);
    syncobject->SegmentNumber   (SpillID);
    syncobject->EventNumber     (EventID);
-
-
-       if (_enable_e1039_translation) {
       VectToE1039();
-   }
     if (RejectEvent() != Fun4AllReturnCodes::EVENT_OK) {
         ResetEvent();
         goto readagain;
