@@ -147,7 +147,7 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 		hit->set_drift_distance(DriftDistance->at(i));
 		hit->set_in_time(hit_in_time->at(i));
 		//cout << " hit in time: "<< hit_in_time->at(i) <<endl;
-		cout << "drift dis: " << DriftDistance->at(i) <<endl;
+		//cout << "drift dis: " << DriftDistance->at(i) <<endl;
 		hit_vec->push_back(hit);
 	}
 

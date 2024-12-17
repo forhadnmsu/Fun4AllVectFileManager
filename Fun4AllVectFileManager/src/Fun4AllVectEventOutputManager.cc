@@ -86,13 +86,12 @@ int Fun4AllVectEventOutputManager::Write(PHCompositeNode* startNode) {
 	if (!m_file || !m_tree) {
 		OpenFile(startNode);
 	}
-ResetBranches();
+	ResetBranches();
 	RunID = m_evt->get_run_id();
 	SpillID = m_evt->get_spill_id();
 	RFID = m_evt->get_qie_rf_id();
 	EventID = m_evt->get_event_id();
 	TurnID = m_evt->get_qie_turn_id();
-	trig_bits = m_evt->get_trigger();
 
 	fpga_triggers[0] = m_evt->get_trigger(SQEvent::MATRIX1);
 	fpga_triggers[1] = m_evt->get_trigger(SQEvent::MATRIX2);
@@ -109,7 +108,7 @@ ResetBranches();
 
 	for (int i = -16; i < 16; ++i) {
 
-		cout << "intensity intex: i" << i+16 << endl;
+		//cout << "intensity intex: i" << i+16 << endl;
 		Intensity[i+16] = m_evt->get_qie_rf_intensity(i);
 	}
 
@@ -120,7 +119,7 @@ ResetBranches();
 			ElementID.push_back(hit->get_element_id());
 			TdcTime.push_back(hit->get_tdc_time());
 			DriftDistance.push_back(hit->get_drift_distance());
-			cout << "get drift distance: "<< hit->get_drift_distance()<<endl;
+			//cout << "get drift distance: "<< hit->get_drift_distance()<<endl;
 			hit_in_time.push_back(hit->is_in_time());
 		}
 	}
