@@ -55,7 +55,7 @@ int Fun4Sim(const int n_evt = 100){
 
  Fun4AllVectEventInputManager* in = new Fun4AllVectEventInputManager("VectIn");
  in->Verbosity(99);
- in->enable_E1039_translation();
+ //in->enable_E1039_translation();
  in->set_tree_name("tree");
  in->fileopen("/seaquest/users/mhossain/Fun4AllVectFileManager/Convert/Vector-In.root");
  se->registerInputManager(in);

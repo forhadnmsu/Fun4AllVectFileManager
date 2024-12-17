@@ -46,7 +46,6 @@ if (!m_file || m_file->IsZombie()) {
     std::cout << "File " << m_file->GetName() << " opened successfully." << std::endl;
 }
 
-timer.Start();
 m_tree = new TTree(m_tree_name.c_str(), "Tree for storing events");
 if (!m_tree) {
     std::cerr << "Error: Could not create tree " << m_tree_name << std::endl;
@@ -144,9 +143,6 @@ void Fun4AllVectEventOutputManager::CloseFile() {
     std::cout << "Fun4AllVectEventOutputManager::CloseFile(): Closing file: " << m_file_name << std::endl;
     m_file->Write();
     m_file->Close();
-    timer.Stop();
-    double compressionTime = timer.RealTime();
-    std::cout << "Compression time: " << compressionTime << " seconds" << std::endl;
     delete m_file;
     m_file = nullptr;
 }

@@ -48,19 +48,38 @@ Fun4AllVectEventInputManager::Fun4AllVectEventInputManager(const std::string& na
    Fun4AllServer* se = Fun4AllServer::instance();
    topNode = se->topNode(topNodeName.c_str());
    PHNodeIterator iter(topNode);
-  
-   PHCompositeNode* runNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "RUN"));
-   if (!runNode) {
-     runNode = new PHCompositeNode("RUN");
-     topNode->addNode(runNode);
-   }
-  
-   PHCompositeNode* eventNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "DST"));
-   if (!eventNode) {
-     eventNode = new PHCompositeNode("DST");
-     topNode->addNode(eventNode);
-   }
-  
+
+    PHCompositeNode* runNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "RUN"));
+  if (!runNode) {
+    runNode = new PHCompositeNode("RUN");
+    topNode->addNode(runNode);
+  }
+
+  PHCompositeNode* eventNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "DST"));
+  if (!eventNode) {
+    eventNode = new PHCompositeNode("DST");
+    topNode->addNode(eventNode);
+  }
+
+     run_header = new SQRun_v1();
+     PHIODataNode<PHObject>* runHeaderNode = new PHIODataNode<PHObject>(run_header, "SQRun", "PHObject");
+     runNode->addNode(runHeaderNode);
+
+     spill_map = new SQSpillMap_v1();
+     PHIODataNode<PHObject>* spillNode = new PHIODataNode<PHObject>(spill_map, "SQSpillMap", "PHObject");
+     runNode->addNode(spillNode);
+
+     event_header = new SQEvent_v1();
+     PHIODataNode<PHObject>* eventHeaderNode = new PHIODataNode<PHObject>(event_header, "SQEvent", "PHObject");
+     eventNode->addNode(eventHeaderNode);
+
+     hit_vec = new SQHitVector_v1();
+     PHIODataNode<PHObject>* hitNode = new PHIODataNode<PHObject>(hit_vec, "SQHitVector", "PHObject");
+     eventNode->addNode(hitNode);
+
+     trig_hit_vec = new SQHitVector_v1();
+     PHIODataNode<PHObject>* triggerhitNode = new PHIODataNode<PHObject>(trig_hit_vec, "SQTriggerHitVector", "PHObject");
+     eventNode->addNode(triggerhitNode);
    syncobject = new SyncObjectv2();
 }
 
@@ -71,36 +90,6 @@ Fun4AllVectEventInputManager::~Fun4AllVectEventInputManager()
      fileclose();
    }
    delete syncobject;
- }
-
-void Fun4AllVectEventInputManager::enable_E1039_translation()
- {
-     Fun4AllServer* se = Fun4AllServer::instance();
-     topNode = se->topNode(topNodeName.c_str());
-  
-     PHNodeIterator iter(topNode);
-     PHCompositeNode* runNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "RUN"));
-     PHCompositeNode* eventNode = static_cast<PHCompositeNode*>(iter.findFirst("PHCompositeNode", "DST"));
-  
-     run_header = new SQRun_v1();
-     PHIODataNode<PHObject>* runHeaderNode = new PHIODataNode<PHObject>(run_header, "SQRun", "PHObject");
-     runNode->addNode(runHeaderNode);
-   
-     spill_map = new SQSpillMap_v1();
-     PHIODataNode<PHObject>* spillNode = new PHIODataNode<PHObject>(spill_map, "SQSpillMap", "PHObject");
-     runNode->addNode(spillNode);
-  
-     event_header = new SQEvent_v1();
-     PHIODataNode<PHObject>* eventHeaderNode = new PHIODataNode<PHObject>(event_header, "SQEvent", "PHObject");
-     eventNode->addNode(eventHeaderNode);
-  
-     hit_vec = new SQHitVector_v1();
-     PHIODataNode<PHObject>* hitNode = new PHIODataNode<PHObject>(hit_vec, "SQHitVector", "PHObject");
-     eventNode->addNode(hitNode);
-  
-     trig_hit_vec = new SQHitVector_v1();
-     PHIODataNode<PHObject>* triggerhitNode = new PHIODataNode<PHObject>(trig_hit_vec, "SQTriggerHitVector", "PHObject");
-     eventNode->addNode(triggerhitNode);
  }
 
 void Fun4AllVectEventInputManager::VectToE1039() {

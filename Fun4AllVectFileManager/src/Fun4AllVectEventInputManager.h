@@ -37,9 +37,6 @@ public:
     const std::string& get_tree_name() const { return _tree_name; }
     void set_tree_name(const std::string& treeName) { _tree_name = treeName; }
 
-
-    void enable_E1039_translation();
-  
 protected:
     int OpenNextFile();
     void VectToE1039();

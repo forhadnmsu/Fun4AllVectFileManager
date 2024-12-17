@@ -23,7 +23,6 @@ public:
     void SetTreeName(const std::string& name) { m_tree_name = name; }
     void SetFileName(const std::string& name) { m_file_name = name; }
     virtual int Write(PHCompositeNode* startNode);
-    TStopwatch timer;
     void ResetBranches();
 protected:
     int OpenFile(PHCompositeNode* startNode);
