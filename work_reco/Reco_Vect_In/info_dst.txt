@@ -1,0 +1,15 @@
+Command: make-dst-list.sh /seaquest/users/mhossain/HitMatrix/e1039-analysis/SimChainDev/data/mup_dump_Dec18
+Time: 2024-12-20 10:47:35
+Directory = /pnfs/e1039/scratch/users/mhossain/SimChainDev/mup_dump_Dec18
+        1/out/DST.root      64 MB 
+        2/out/DST.root      65 MB 
+        3/out/DST.root      66 MB 
+        4/out/DST.root      65 MB 
+        5/out/DST.root      66 MB 
+        6/out/DST.root      65 MB 
+        7/out/DST.root      65 MB 
+        8/out/DST.root      65 MB 
+        9/out/DST.root      64 MB 
+       10/out/DST.root      64 MB 
+
+Total: 10 files, 653 MB

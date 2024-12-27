@@ -94,6 +94,7 @@ Fun4AllVectEventInputManager::~Fun4AllVectEventInputManager()
 
 void Fun4AllVectEventInputManager::VectToE1039() {
 	// Example: Initialize default triggers
+	cout << "run number"<< runID << endl;
 	event_header->set_run_id(runID);
 	SQSpill* spill = spill_map->get(spillID);
 	if(!spill) {
@@ -110,7 +111,8 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 	for(int i = -16; i < 16; ++i) {event_header->set_qie_rf_intensity(i, rfIntensities[i+16]);} // need to be added
 	//for(int i = -16; i < 16; ++i) {cout << "intensity: "<< rfIntensities[i+16] <<endl;} // need to be added
 	
-
+	
+	cout << "spill number"<< spillID << endl;
 
 	if (event_header) {
 		// Apply the FPGA triggers to the event header
@@ -137,6 +139,7 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 		hit->set_in_time(hitsInTime->at(i));
 		hit_vec->push_back(hit);
 	}
+	cout << "spill number 2"<< spillID << endl;
 
 	//we need to fill from the trig-hits vector (need to work on this later)
 	for (size_t i = 0; i < triggerElementIDs->size(); ++i) {
@@ -149,6 +152,7 @@ void Fun4AllVectEventInputManager::VectToE1039() {
 		hit->set_in_time(triggerHitsInTime->at(i));
 		trig_hit_vec->push_back(hit);
 	}
+	cout << "spill number 3 "<< spillID << endl;
 }
 
 int Fun4AllVectEventInputManager::fileopen(const std::string &filenam) {
@@ -198,6 +202,7 @@ _tin->SetBranchAddress("driftDistances", &driftDistances);
 _tin->SetBranchAddress("tdcTimes", &tdcTimes);    
 _tin->SetBranchAddress("hitsInTime", &hitsInTime);    
 
+_tin->SetBranchAddress("triggerDetectorIDs", &triggerDetectorIDs);    
 _tin->SetBranchAddress("triggerDriftDistances", &triggerDriftDistances);    
 _tin->SetBranchAddress("triggerElementIDs", &triggerElementIDs);    
 _tin->SetBranchAddress("triggerTdcTimes", &triggerTdcTimes);    
@@ -237,8 +242,8 @@ int Fun4AllVectEventInputManager::run(const int nevents) {
     _tin->GetEntry(events_thisfile);
     events_thisfile++;
     events_total++;
-    //std::cout << "EventID: "<< EventID<<std::endl;
-    //std::cout << "Fpga1 trigger: "<<fpga_triggers[0] <<std::endl;
+    std::cout << "EventID: "<< eventID<<std::endl;
+    std::cout << "Fpga1 trigger: "<<fpgaTriggers[0] <<std::endl;
 
    SetRunNumber                (runID);
    mySyncManager->PrdfEvents   (events_thisfile);
@@ -249,7 +254,9 @@ int Fun4AllVectEventInputManager::run(const int nevents) {
    syncobject->EventCounter    (events_thisfile);
    syncobject->SegmentNumber   (spillID);
    syncobject->EventNumber     (eventID);
+   std::cout << "deugg 1: " <<std::endl;
       VectToE1039();
+   std::cout << "deugg 2: " <<std::endl;
     if (RejectEvent() != Fun4AllReturnCodes::EVENT_OK) {
         ResetEvent();
         goto readagain;

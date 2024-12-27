@@ -13,7 +13,7 @@ R__LOAD_LIBRARY(libSQPrimaryGen)
 R__LOAD_LIBRARY(libcalibrator)
 
 
-int Fun4Sim(const int n_evt = 100){
+int Fun4Sim(const int n_evt = 200000){
   const double FMAGSTR = -1.044;
   const double KMAGSTR = -1.025;
 
@@ -48,7 +48,7 @@ int Fun4Sim(const int n_evt = 100){
   se->registerSubsystem(reco);
 
   SQVertexing* vtx = new SQVertexing();
-  vtx->Verbosity(100);
+  vtx->Verbosity(1);
   vtx->set_legacy_rec_container(true); // default = false
   se->registerSubsystem(vtx);
 
@@ -57,14 +57,16 @@ int Fun4Sim(const int n_evt = 100){
  in->Verbosity(99);
  //in->enable_E1039_translation();
  in->set_tree_name("tree");
- in->fileopen("/seaquest/users/mhossain/Fun4AllVectFileManager/Convert/Vector-In.root");
+ //in->fileopen("/seaquest/users/mhossain/Fun4AllVectFileManager/Convert/Vector-In.root");
+ //in->fileopen("in/combined_tracks.root");
+ in->fileopen("/seaquest/users/mhossain/TrackMerging/out/combined_tracks_1.root");
  se->registerInputManager(in);
  ///////////////////////////////////////////
   // Output
   // DST output manager
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   se->registerOutputManager(out);
-  se->run();
+  se->run(n_evt);
   se->End();
   se->PrintTimer();
   rc->WriteToFile("recoConsts.tsv");
